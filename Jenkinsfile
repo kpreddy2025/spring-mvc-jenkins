@@ -8,7 +8,7 @@ pipeline {
 
   options {
     timeout(time: 60, unit: 'MINUTES')
-  //  timestamps()
+   // timestamps()
     buildDiscarder(logRotator(numToKeepStr: '2'))
   }
   
@@ -69,36 +69,42 @@ pipeline {
 
     stage('Test') {
       steps {
+      echo "Test"
         // Test (Unit test / Automation test(Selenium/Robot framework) / etc.)
       }
     }
 
     stage('Code Analysis') {
       steps {
+       echo "Code Analysis"
         // Static Code analysis (Coverity/ SonarQube /openvas/Nessus etc.)
       }
     }
 
     stage('Generate Release Notes') {
       steps {
+       echo "Generate Release Notes"
         // Release note generation .
       }
     }
 
     stage('Tagging') {
       steps {
+      echo "Tagging"
         // Tagging specific version number
       }
     }
 
     stage('Release') {
       steps {
+       echo "Release"
         // release specific versions(Snapshot / release / etc.)
       }
     }
 
     stage('Deploy') {
       steps {
+        echo "Deploy"
         // Deploy to cloud providers /local drives /artifactory etc.
         // Deploy to Deploy/prod /test/ etc
       }
