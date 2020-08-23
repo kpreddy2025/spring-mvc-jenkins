@@ -37,20 +37,19 @@ pipeline {
     stage('Clean Workspace') {
       steps {
         // Clean the workspace
-       script{
+     
         sh 'mvn clean'
         echo "Cleaning Workspace Done"
-        }
+        
        }
 
       } 
       stage('Check Out') {
       steps {
-        // Clean the workspace
-       script{
+        // Clean the workspace     
        // sh 'mvn clean'
         echo "Cleaning Workspace Done"
-        }
+        
        }
 
       }   
@@ -59,11 +58,10 @@ pipeline {
       steps {
         // build, build stages can be made in parallel aswell
         // build stage can call other stages
-        // can trigger other jenkins pipelines and copy artifact from that pipeline
-        script{
+        // can trigger other jenkins pipelines and copy artifact from that pipeline       
         sh 'mvn install'
         echo "Build Done"
-        }
+        
       }
     }
 
