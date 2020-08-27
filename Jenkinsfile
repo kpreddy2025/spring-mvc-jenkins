@@ -15,7 +15,7 @@ pipeline {
  environment {
  
      BUILDSERVER_WORKSPACE="${WORKSPACE}"
-     BUILD_NO=sh(returnStdout:true,script:"echo ${GIT_BRANCH}_${BUILD_NUMBER} | sed 's/\\//_/g'").trim()
+    // BUILD_NO=sh(returnStdout:true,script:"echo ${GIT_BRANCH}_${BUILD_NUMBER} | sed 's/\\//_/g'").trim()
      
  }
   stages {
@@ -25,12 +25,12 @@ pipeline {
       steps {
        echo "Server is ready"
       script{
-      br_name=sh(script:"echo ${BRANCH_NAME}|tr '/' '_' ",returnStdout:true).trim()
+     // br_name=sh(script:"echo ${BRANCH_NAME}|tr '/' '_' ",returnStdout:true).trim()
       def buildid=env.BUILD_ID
       echo buildid
       currentBuild.displayName="#"+env.BUILD_ID
 		}
-       sh 'git clean -dfx'
+      // sh 'git clean -dfx'
       }
     }
 
@@ -38,7 +38,7 @@ pipeline {
       steps {
         // Clean the workspace
      
-        sh 'mvn clean'
+    //    sh 'mvn clean'
         echo "Cleaning Workspace Done"
         
        }
