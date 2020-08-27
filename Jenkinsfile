@@ -7,7 +7,7 @@ pipeline {
   agent any //{ label 'labelname' }
 
   options {
-    timeout(time: 60, unit: 'MINUTES')
+    timeout(time: 60, unit: 'SECONDS')
    // timestamps()
     buildDiscarder(logRotator(numToKeepStr: '2'))
   }
@@ -59,7 +59,7 @@ pipeline {
         // build, build stages can be made in parallel aswell
         // build stage can call other stages
         // can trigger other jenkins pipelines and copy artifact from that pipeline       
-        sh 'mvn install'
+      //  sh 'mvn install'
         echo "Build Done"
         
       }
