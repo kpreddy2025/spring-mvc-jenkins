@@ -30,9 +30,9 @@ pipeline {
 	         '''
      // br_name=sh(script:"echo ${BRANCH_NAME}|tr '/' '_' ",returnStdout:true).trim()
       def buildid=env.BUILD_ID
-      echo "Build ID IS"+buildid     
+      echo "Build ID IS: "+buildid     
       currentBuild.displayName="#"+env.BUILD_ID
-      echo "BUILD NAME IS ${BUILD_DISPLAY_NAME}"
+      echo "BUILD NAME IS : ${BUILD_DISPLAY_NAME}"
    
       }
       // sh 'git clean -dfx'
