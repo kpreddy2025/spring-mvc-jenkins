@@ -26,36 +26,36 @@ pipeline {
        echo "Server is ready"
       script{
 	      sh '''
-	       echo "JENKINPATH IS ${PATH}"
-	         '''
-     // br_name=sh(script:"echo ${BRANCH_NAME}|tr '/' '_' ",returnStdout:true).trim()
-      def buildid=env.BUILD_ID
-      echo "Build ID IS: "+buildid     
-      currentBuild.displayName="#"+env.BUILD_ID
-      echo "BUILD NAME IS : ${BUILD_DISPLAY_NAME}"
-   
-      }
+	        echo "JENKINPATH IS: ${PATH}"
+	    
+	      sh '''
+           // br_name=sh(script:"echo ${BRANCH_NAME}|tr '/' '_' ",returnStdout:true).trim()
+     		 def buildid=env.BUILD_ID
+     		 echo "Build ID IS"+buildid    
+    		 currentBuild.displayName="#"+env.BUILD_ID
+		}
       // sh 'git clean -dfx'
       }
     }
-
-    stage('Clean Workspace') {
+   stage('Clean Workspace') {
       steps {
-        // Clean the workspace
-     
-    //    sh 'mvn clean'
+          sh 'mvn clean'
+          
         echo "Cleaning Workspace Done"
         
        }
 
       } 
       stage('Check Out') {
-      steps {
-        // Clean the workspace     
-       // sh 'mvn clean'
-        echo "Cleaning Workspace Done"
-        
-       }
+      steps{
+    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]])
+     //git credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git'   
+    //git changelog: false, credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', poll: false, url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git'
+    //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]])
+    //checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]]
+    echo "Code Check Out Done" 
+    }    
+
 
       }   
       
