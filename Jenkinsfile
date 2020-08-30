@@ -39,77 +39,45 @@ pipeline {
     }
    stage('Clean Workspace') {
       steps {
-          sh 'mvn clean'
-          
-        echo "Cleaning Workspace Done"
-        
+          sh 'mvn clean'          
+       	  echo "Cleaning Workspace Done"        
        }
 
       } 
-      stage('Check Out') {
+  stage('Check Out') {
       steps{
-    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]])
-     //git credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git'   
-    //git changelog: false, credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', poll: false, url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git'
-    //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]])
-    //checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]]
-    echo "Code Check Out Done" 
-    }    
+    	 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b407cb41-e3b3-44a1-80be-babe2e1334e5', url: 'https://github.com/kpreddy2025/spring-mvc-jenkins.git']]])
+    	 echo "Code Check Out Done" 
+    } 
 
-
-      }   
-      
+   }          
     stage('Build') {
-      steps {
-        // build, build stages can be made in parallel aswell
-        // build stage can call other stages
-        // can trigger other jenkins pipelines and copy artifact from that pipeline       
-      //  sh 'mvn install'
-        echo "Build Done"
-        
+      steps {       
+      	 sh 'mvn clean compile install'
+         echo "Build Done"        
       }
     }
-
     stage('Test') {
       steps {
       echo "Test"
-        // Test (Unit test / Automation test(Selenium/Robot framework) / etc.)
+       
       }
     }
-
     stage('Code Analysis') {
       steps {
-       echo "Code Analysis"
-        // Static Code analysis (Coverity/ SonarQube /openvas/Nessus etc.)
+       echo "Code Analysis Done"
+      
       }
     }
-
-    stage('Generate Release Notes') {
-      steps {
-       echo "Generate Release Notes"
-        // Release note generation .
-      }
+    stage ('Archive artifacts for ServiceApp'){
+          steps{
+              archiveArtifacts '**/**/*.war'
+          }
     }
-
-    stage('Tagging') {
-      steps {
-      echo "Tagging"
-        // Tagging specific version number
-      }
-    }
-
-    stage('Release') {
-      steps {
-       echo "Release"
-        // release specific versions(Snapshot / release / etc.)
-      }
-    }
-
     stage('Deploy') {
       steps {
-        echo "Deploy"
-        // Deploy to cloud providers /local drives /artifactory etc.
-        // Deploy to Deploy/prod /test/ etc
+        echo "Deploy Done"
+       
       }
     }
   }
