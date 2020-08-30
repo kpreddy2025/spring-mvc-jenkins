@@ -66,10 +66,17 @@ pipeline {
     stage('Code Analysis') {
    	 	environment {
        		 scannerHome = tool 'sonarqube-1'
+       		  ORGANIZATION = "spring-mvc-jenkins-dev"
+   			  PROJECT_NAME = "spring-mvc-jenkins"
     	}
       steps {
-       withSonarQubeEnv('sonarqube-1') {
-    		sh "${scannerHome}/bin/sonar-scanner"
+      withSonarQubeEnv('sonarqube-1') {
+    		sh ''' "${scannerHome}/bin/sonar-scanner"
+    					-Dsonar.organization=$ORGANIZATION \
+      				    -Dsonar.java.binaries=build/classes/java/ \
+        			    -Dsonar.projectKey=$PROJECT_NAME \
+       					-Dsonar.sources=.
+    		'''
 		}
 		timeout(time: 5, unit: 'MINUTES') {
             waitForQualityGate abortPipeline: true
