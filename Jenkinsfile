@@ -5,7 +5,10 @@
 
 pipeline {
   agent any //{ label 'labelname' }
-
+    tools{
+	jdk 'JAVA-JDK1.8'
+	maven 'MAVEN3'		
+     }
   options {
     timeout(time: 60, unit: 'SECONDS')
    // timestamps()
@@ -15,6 +18,7 @@ pipeline {
  environment {
  
      BUILDSERVER_WORKSPACE="${WORKSPACE}"
+	 echo "Build Is"
     // BUILD_NO=sh(returnStdout:true,script:"echo ${GIT_BRANCH}_${BUILD_NUMBER} | sed 's/\\//_/g'").trim()
      
  }
