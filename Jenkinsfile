@@ -13,25 +13,23 @@ pipeline {
     timeout(time: 60, unit: 'SECONDS')
    // timestamps()
     buildDiscarder(logRotator(numToKeepStr: '2'))
-  }
-  
+  }  
  environment {
  
-     BUILDSERVER_WORKSPACE="${WORKSPACE}"
-	 echo "Build Is"
+     BUILDSERVER_WORKSPACE="${WORKSPACE}"	
     // BUILD_NO=sh(returnStdout:true,script:"echo ${GIT_BRANCH}_${BUILD_NUMBER} | sed 's/\\//_/g'").trim()
      
  }
-  stages {
-  
-   stage('Server Ready?') {
-  
+  stages {  
+   stage('JENKINS PATH') {  
       steps {
        echo "Server is ready"
       script{
+	      sh '''
      // br_name=sh(script:"echo ${BRANCH_NAME}|tr '/' '_' ",returnStdout:true).trim()
       def buildid=env.BUILD_ID
-      echo buildid
+      echo "Build ID IS"+buildid
+      echo "JENKINPATH IS ${PATH}"
       currentBuild.displayName="#"+env.BUILD_ID
 		}
       // sh 'git clean -dfx'
