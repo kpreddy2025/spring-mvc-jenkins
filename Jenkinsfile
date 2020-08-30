@@ -64,7 +64,16 @@ pipeline {
       }
     }
     stage('Code Analysis') {
+   	 	environment {
+       		 scannerHome = tool 'sonaqube-1'
+    	}
       steps {
+      withSonarQubeEnv(credentialsId: 'sonarqube-token') {
+    		sh "${scannerHome}/bin/sonar-scanner"
+		}
+		timeout(time: 5, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+        }
        echo "Code Analysis Done"
       
       }
